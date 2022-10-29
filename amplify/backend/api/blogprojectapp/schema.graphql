@@ -3,7 +3,14 @@
 input AMPLIFY {
   globalAuthRule: AuthRule = { allow: public }
 } # FOR TESTING ONLY!
-type Post @model {
+type Post
+  @model
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "username" }
+      { allow: public, operations: [read] }
+    ]
+  ) {
   id: ID!
   title: String!
   content: String!

@@ -14,6 +14,9 @@
     "categories": {
       "api": {
         "blogprojectapp": {}
+      },
+      "auth": {
+        "blogprojectapp84c9db0e": {}
       }
     }
   }
