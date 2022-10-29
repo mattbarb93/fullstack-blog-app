@@ -13,8 +13,12 @@ const Navbar = () => {
         ["Create Post", "/create-post"],
         ["Profile", "/profile"],
       ].map(([title, url], index) => (
-        <Link href={url} key={index}>
-          <a className="rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg0-slage-100 hover:text-slate-900">
+        <Link legacyBehavior href={url} key={index}>
+          <a
+            className="rounded-lg px-3 py-2 
+          text-slate-700 
+          font-medium hover:bg0-slage-100 hover:text-slate-900"
+          >
             {title}
           </a>
         </Link>
