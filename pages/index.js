@@ -20,7 +20,7 @@ export default function Home() {
     <div>
       <h1 className="text-6xl font-bold underline text-sky-400">My Posts</h1>{" "}
       {posts.map((post, index) => (
-        <p key={index}>{post.content}</p>
+        <p key={index}>{post.title}</p>
       ))}
     </div>
   );
