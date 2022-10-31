@@ -1,6 +1,7 @@
 import { Auth, API } from "aws-amplify";
 import { useState, useEffect, React } from "react";
 import { postsByUsername } from "../src/graphql/queries";
+import { deletePost as deletePostMutation } from "../src/graphql/mutations";
 import Link from "next/link";
 
 const dayjs = require("dayjs");
@@ -23,26 +24,16 @@ export default function MyPosts() {
     setPosts(postData.data.postsByUsername.items);
   }
 
-  console.log(posts);
+  async function deletePost(id) {
+    await API.graphql({
+      query: deletePostMutation,
+      variables: { input: { id } },
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+    });
+    fetchPosts();
+  }
 
   return (
-    // <div
-    //   key={index}
-    //   className="py-8 px-8 max-w-xxl mx-auto bg-white rounded-xl shadow-lg space-y-2 sm:py-1 sm:flex
-    // sm:items-center sm:space-y-0 sm:space-x-6 mb-2"
-    // >
-    //   <h1 className="text-3xl font-semibold tracking-wide mt-6 mb-2">
-    //     My Posts
-    //   </h1>
-    //   {posts.map((post, index) => (
-    //     <Link key={index} href={`/posts/${post.id}`}>
-    //       <div className="cursor-pointer-border-b border-gray-300 mt-8 pb-4">
-    //         <h2 className="text-xl font-semibold">{post.title}</h2>
-    //         <p className="text-gray-500 mt-2">Author: {post.username}</p>
-    //       </div>
-    //     </Link>
-    //   ))}
-    // </div>
     <div>
       {posts.map((post, index) => (
         <div
