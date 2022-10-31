@@ -1,5 +1,5 @@
 import { withAuthenticator } from "@aws-amplify/ui-react";
-import { useEffect, useState, useRef } from "react";
+import { useState, React, useRef } from "react";
 import { API } from "aws-amplify";
 import { useRouter } from "next/router";
 import { v4 as uuid } from "uuid";
@@ -26,12 +26,14 @@ function CreatePost() {
   async function createNewPost() {
     if (!title || !content) return;
     const id = uuid();
+    post.id = id;
 
     await API.graphql({
       query: createPost,
       variables: { input: post },
       authMode: "AMAZON_COGNITO_USER_POOLS",
     });
+    router.push(`/posts/${id}`);
   }
   return (
     <div>
@@ -58,7 +60,6 @@ function CreatePost() {
       </button>
     </div>
   );
-  router.push(`/post/${id}`);
 }
 
 export default withAuthenticator(CreatePost);
