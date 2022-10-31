@@ -11,6 +11,7 @@
   "dependencies": {
     "@aws-amplify/ui-react": "^1.2.26",
     "aws-amplify": "^4.3.42",
+    "dayjs": "^1.11.6",
     "next": "13.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
