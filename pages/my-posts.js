@@ -1,8 +1,9 @@
-import { Auth, API } from "aws-amplify";
+import { Auth, API, Storage } from "aws-amplify";
 import { useState, useEffect, React } from "react";
 import { postsByUsername } from "../src/graphql/queries";
 import { deletePost as deletePostMutation } from "../src/graphql/mutations";
 import Link from "next/link";
+import { list } from "postcss";
 
 const dayjs = require("dayjs");
 
@@ -21,7 +22,19 @@ export default function MyPosts() {
       query: postsByUsername,
       variables: { username },
     });
-    setPosts(postData.data.postsByUsername.items);
+
+    const { items } = postData.data.postsByUsername;
+
+    const postsWithImages = await Promise.all(
+      items.map(async (post) => {
+        if (post.coverImage) {
+          post.coverImage = await Storage.get(post.coverImage);
+        }
+        return post;
+      })
+    );
+
+    setPosts(postsWithImages);
   }
 
   async function deletePost(id) {
