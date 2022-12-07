@@ -35,6 +35,8 @@ export default function Post({ post }) {
     authListener();
   }, []); //check when app is loaded/mounted too!
 
+  console.log(comment);
+
   async function authListener() {
     Hub.listen("auth", (data) => {
       switch (data.payload.event) {
@@ -67,6 +69,7 @@ export default function Post({ post }) {
     if (!message) return;
     const id = uuid();
     comment.id = id;
+
     try {
       await API.graphql({
         query: createComment,
@@ -76,7 +79,8 @@ export default function Post({ post }) {
     } catch (error) {
       console.log(error);
     }
-    router.push("/my-posts");
+    console.log(comment);
+    // router.push("/my-posts");
   }
 
   return (
